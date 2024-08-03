@@ -2,8 +2,30 @@ def main():
     book_path = "books/frankenstein.txt"
     text = get_book_path(book_path)
     words_list = text.split()
-    print(word_count(words_list))
-    print(count_characters(text))
+    count = word_count(words_list)
+    char_dict = count_characters(text)
+    list_of_dicts = dict_to_sorted_list(char_dict)
+    
+    print(f"--- Begin report of {book_path} ---")
+    print(f"{count} number of words in document")
+    print()
+
+    for dict in list_of_dicts:
+        print(f"The '{dict["char"]}' character was found {dict["num"]} of times.")
+    
+    print("--- End report ---")
+
+
+def sort_on(dict):
+    return dict["num"]
+
+def dict_to_sorted_list(dict):
+    list = []
+    for key in dict:
+        if key.isalpha():
+            list.append({"char": key, "num": dict[key]})
+    list.sort(reverse=True, key=sort_on)
+    return list
 
 
 def word_count(words_list):
